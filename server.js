@@ -17,13 +17,40 @@ app.route('/')
     })
     .post(function(req, res) {
         db.show.create({
-            title: req.body.title,
+            name: req.body.title,
             description: req.body.description,
             rating: req.body.rating
         })
         .then(function(data) {
             res.redirect('/')
         })
+    })
+
+app.route('/:id')
+    .get(function(req,res) {
+        db.show.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(function(data) {
+            res.json(data)
+        })
+    })
+    .put(function(req, res) {
+        db.show.update({
+                name: req.body.title,
+                description: req.body.description,
+                rating: req.body.rating
+            },
+            {
+                where: {id: req.params.id}
+        })
+        .then(
+            function(data) {
+                res.json(data)
+            }
+        )
     })
 
 
