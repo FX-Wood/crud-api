@@ -48,9 +48,17 @@ app.route('/:id')
         })
         .then(
             function(data) {
-                res.json(data)
+                res.redirect('/' + req.params.id)
             }
         )
+    })
+    .delete(function(req, res) {
+        db.show.destroy({
+            where: {id: req.params.id}
+        })
+        .then(function(data) {
+            res.redirect('/')
+        })
     })
 
 
